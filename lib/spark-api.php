@@ -96,27 +96,32 @@ class spark_api {
 
 		};
 
-		if ( ! $cache ) 
-			delete_transient( 'sparky-device-' . sanitize_title_with_dashes( $device_id ) );
+		if ( ! $cache ) {
 
-		if (false === ( $device = get_transient( 'sparky-device-' . sanitize_title_with_dashes( $device_id ) ) ) ) {
-			
 			$device = $this->request( $this->api . '/devices/' . $device_id . '?access_token=' . $this->token );
 
-			if ( is_wp_error( $device ) ) {
+		} else {
 
-				return $device->get_error_message();
+			if (false === ( $device = get_transient( 'sparky-device-' . sanitize_title_with_dashes( $device_id ) ) ) ) {
+				
+				$device = $this->request( $this->api . '/devices/' . $device_id . '?access_token=' . $this->token );
 
-			} else {
+				if ( ! is_wp_error( $device ) ) {
 
-				if ($cache)
 					set_transient( 'sparky-device-' . sanitize_title_with_dashes( $device_id ), $device, $cache );
-
-				return $device;
+				}	
 			}
 		}
 
-		return $device;
+		if ( is_wp_error( $device ) ) {
+
+			return $device->get_error_message();
+
+		} else {
+
+			return $device;
+			
+		}
 	}
 
 	// https://api.spark.io/v1/devices/{DEVICE_ID}/{VARIABLE}?access_token={TOKEN}
