@@ -35,10 +35,11 @@
   content: '\e600';
 }
 
-/* hide the filter button on the spark post type */
+/* hide the filtes on the spark post type */
 
 .post-type-spark #post-query-submit,
-.post-type-spark .view-switch {
+.post-type-spark .view-switch,
+.post-type-spark .search-box {
 	display: none;
 }
 
