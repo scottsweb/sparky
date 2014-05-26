@@ -33,7 +33,7 @@ function sparky_shortcode( $atts ) {
 	if ( is_array($value) ) {
 		$cachedvalue = $value['result'];
 	} else {
-		$cachedvalue = $variable . ' (' . $value .')';
+		$cachedvalue =  '(' . $value . ')';
 	}
 
 	return $cachedvalue;
@@ -56,11 +56,11 @@ function sparky_status_shortcode( $atts ) {
 
 	// get post
 	$post = get_post( $atts['id'] );
-	
+
 	// not a spark? fail
 	if ( ! $post ) return;
 	if ( $post->post_type != 'spark' ) return;
-	
+
 	// grab the post meta
 	$core = get_post_meta( $post->ID, 'spark-core', true );
 	$cache = get_post_meta( $post->ID, 'spark-cache', true );
