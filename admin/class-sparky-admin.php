@@ -256,8 +256,17 @@ class sparky_admin {
 	 */
 	public function meta_boxes() {
 
+		global $pagenow;
+
+		// only add meta boxes to spark post type (as spark_api request can be slow)
+		if ( $pagenow != 'post.php') return;
+
+		if ( isset( $_GET['post'] ) ) {
+			if ( 'spark' != get_post_type( $_GET['post'] ) ) return;
+		}
+
 		$sa = new spark_api();
-		$getcores = $sa->spark_devices(HOUR_IN_SECONDS);
+		$getcores = $sa->spark_devices();
 		$cores = array();
 
 		if ( ! empty($getcores) ) {

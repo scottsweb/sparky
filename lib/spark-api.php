@@ -35,8 +35,8 @@ class spark_api {
 		$this->errors = new WP_Error();
 
 		// output errors when using this class in the admin
-		if ( is_admin() )
-			add_action( 'admin_notices', array( $this, 'notice_errors') );
+		//if ( is_admin() )
+		//	add_action( 'admin_notices', array( $this, 'notice_errors') );
 
 		// Set the token 
 		if ( $token ) {
@@ -120,7 +120,7 @@ class spark_api {
 		} else {
 
 			return $device;
-			
+
 		}
 	}
 
