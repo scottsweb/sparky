@@ -259,51 +259,56 @@ class sparky_admin {
 		global $pagenow;
 
 		// only add meta boxes to spark post type (as spark_api request can be slow)
-		if ( $pagenow != 'post.php') return;
+		if ( 'post-new.php' == $pagenow || 'post.php' == $pagenow )   {
 
-		if ( isset( $_GET['post'] ) ) {
-			if ( 'spark' != get_post_type( $_GET['post'] ) ) return;
-		}
-
-		$sa = new spark_api();
-		$getcores = $sa->spark_devices();
-		$cores = array();
-
-		if ( ! empty($getcores) ) {
-			foreach ($getcores as $core) {
-				$cores[$core['id']] = $core['name'] .' ('. $core['id'] .')';;
+			if ( isset( $_GET['post'] ) ) {
+				if ( 'spark' != get_post_type( $_GET['post'] ) ) return;
 			}
+
+			if ( isset( $_GET['post_type'] ) ) {
+				if ( 'spark' != $_GET['post_type'] ) return; 
+			}
+
+			$sa = new spark_api();
+			$getcores = $sa->spark_devices();
+			$cores = array();
+
+			if ( ! empty($getcores) ) {
+				foreach ($getcores as $core) {
+					$cores[$core['id']] = $core['name'] .' ('. $core['id'] .')';;
+				}
+			}
+
+			$fields = array(
+				'core' => array(
+					'label'       => __( 'Spark Core ID', $this->plugin_slug ),
+					'type'        => 'select',
+					'options'	  => $cores,
+					'required'    => true,
+					'default' 	  => __( 'Choose a core', $this->plugin_slug ) 
+				),
+				'variable' => array(
+					'label'       => __( 'Variable Name', $this->plugin_slug ),
+					'type'        => 'text',
+					'required'    => true
+				),
+				'cache' => array(
+					'label' => __( 'Cache', $this->plugin_slug ),
+					'type' => 'select',
+					'options' => apply_filters( 'sparky_cache_values', array(
+						'0'			=> __( 'None', $this->plugin_slug ),
+						'60'		=> __( '60 Seconds', $this->plugin_slug ),
+						'300'		=> __( '5 Minutes', $this->plugin_slug ),
+						'600'		=> __( '10 Minutes', $this->plugin_slug ),
+						'3600'		=> __( '1 Hour', $this->plugin_slug ),
+						'21600'		=> __( '6 Hours', $this->plugin_slug ),
+						'86400'		=> __( '1 Day', $this->plugin_slug )
+					)),
+				)
+			);
+
+			WGMetaBox::add_meta_box( 'spark', __( 'Spark', $this->plugin_slug ), $fields, 'spark', 'normal', 'high' );
 		}
-
-		$fields = array(
-			'core' => array(
-				'label'       => __( 'Spark Core ID', $this->plugin_slug ),
-				'type'        => 'select',
-				'options'	  => $cores,
-				'required'    => true,
-				'default' 	  => __( 'Choose a core', $this->plugin_slug ) 
-			),
-			'variable' => array(
-				'label'       => __( 'Variable Name', $this->plugin_slug ),
-				'type'        => 'text',
-				'required'    => true
-			),
-			'cache' => array(
-				'label' => __( 'Cache', $this->plugin_slug ),
-				'type' => 'select',
-				'options' => apply_filters( 'sparky_cache_values', array(
-					'0'			=> __( 'None', $this->plugin_slug ),
-					'60'		=> __( '60 Seconds', $this->plugin_slug ),
-					'300'		=> __( '5 Minutes', $this->plugin_slug ),
-					'600'		=> __( '10 Minutes', $this->plugin_slug ),
-					'3600'		=> __( '1 Hour', $this->plugin_slug ),
-					'21600'		=> __( '6 Hours', $this->plugin_slug ),
-					'86400'		=> __( '1 Day', $this->plugin_slug )
-				)),
-			)
-		);
-
-		WGMetaBox::add_meta_box( 'spark', __( 'Spark', $this->plugin_slug ), $fields, 'spark', 'normal', 'high' );
 	}
 
 	public function status_meta_box() {
