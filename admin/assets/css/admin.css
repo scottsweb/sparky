@@ -1,0 +1,76 @@
+/* custom icon font */
+
+@font-face {
+	font-family: 'spark';
+	src:url('../fonts/spark.eot?jh2zen');
+	src:url('../fonts/spark.eot?#iefixjh2zen') format('embedded-opentype'),
+		url('../fonts/spark.woff?jh2zen') format('woff'),
+		url('../fonts/spark.ttf?jh2zen') format('truetype'),
+		url('../fonts/spark.svg?jh2zen#spark') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="spark-"], 
+[class*=" spark-"] {
+	font-family: 'spark';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.spark-spark:before {
+	content: "\e600";
+}
+
+/* use custom icon on menu */
+
+#adminmenu #menu-posts-spark div.wp-menu-image:before {
+  font-family: 'spark' !important;
+  content: '\e600';
+}
+
+/* hide the filter button on the spark post type */
+
+.post-type-spark #post-query-submit,
+.post-type-spark .view-switch {
+	display: none;
+}
+
+/* simplify the publish box for the spark post type */
+
+.post-type-spark #minor-publishing {
+	display: none;
+}
+
+.post-type-spark #major-publishing-actions {
+	border-top: none;
+}
+
+/* meta box tweeks */
+
+#spark.postbox #spark-core,
+#spark.postbox #spark-cache {
+	width: 100%;
+}
+
+/* spark post type table columns */
+
+.post-type-spark th#id {
+	width: 8%;
+}
+
+.post-type-spark th#shortcode {
+	width: 30%;
+}
+
+/* settings page */
+
+.spark_page_sparky h3 {
+	display: none;
+}

@@ -1,0 +1,17 @@
+{
+	"name"       : "scottsweb/sparky",
+	"description": "Spark Core meet WordPress",
+	"keywords"   : ["wordpress"],
+	"type"       : "wordpress-plugin",
+	"license"    : "GPL-2.0",
+	"authors"    : [
+	{
+		"name"    : "Scott Evans",
+		"homepage": "http://scott.ee"
+	}
+	],
+	"require"    : {
+		"php": ">=5.2.4",
+		"composer/installers": "~1.0"
+	}
+}
